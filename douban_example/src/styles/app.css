@@ -1,0 +1,40 @@
+.app_container {
+    background-color: #00B83F;
+}
+
+.app_header {
+    height: 8%;
+    background-color: orange;
+    display: flex;
+    /*主轴方向上对其*/
+    justify-content: center;
+    /*侧轴方向上对其*/
+    align-items: center;
+    text-align: center;
+}
+
+.app_header a {
+    /*margin-left: 1rem;*/
+    /*margin-right: 1rem;*/
+    flex: 1;
+    color: white;
+}
+
+.app_header a:hover {
+    color: blue;
+    font-weight: 700;
+}
+
+.app_content {
+    height: 85%;
+    background-color: orchid;
+}
+
+.app_footer {
+    height: 7%;
+    background-color: darkgray;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

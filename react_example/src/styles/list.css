@@ -1,0 +1,57 @@
+.list_container {
+    background-color: plum;
+    display: flex;
+}
+
+.list_left {
+    width: 5rem;
+    background-color: palegoldenrod;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.list_left a {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.list_left a:hover {
+    color: mediumvioletred;
+    font-weight: 700;
+}
+
+.list_current {
+    color: mediumvioletred;
+    font-weight: 700;
+}
+
+.list_right {
+    background-color: lightcoral;
+    display: flex;
+    flex-direction: column;
+}
+
+.list_search {
+    height: 8%;
+    background-color: #c0b536;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.list_search div {
+    height: 60%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.list_search input {
+    /*width: 80%;*/
+    flex: 1;
+}
+
+.list_content {
+    height: 92%;
+}

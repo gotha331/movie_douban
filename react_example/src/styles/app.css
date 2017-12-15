@@ -1,0 +1,36 @@
+.app_container{
+    background-color: #00B83F;
+}
+
+.app_header{
+    height: 7%;
+    background-color: orange;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app_header a{
+    margin-left: 1rem;
+    margin-right: 1rem;
+    color: white;
+}
+
+.app_header a:hover{
+    color: blue;
+    font-weight: 700;
+}
+
+.app_content{
+    height: 83%;
+    background-color: orchid;
+}
+
+.app_footer{
+    height:10%;
+    background-color: darkgray;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

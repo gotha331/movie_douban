@@ -1,0 +1,29 @@
+.movieList_container{
+    background-color: greenyellow;
+    overflow-y: scroll;
+}
+
+.movieList_container1{
+    background-color: greenyellow;
+    overflow-y: scroll;
+}
+
+.movieList_item{
+    height: 10rem;
+    display: flex;
+}
+
+.movieList_item img{
+    height: 9rem;
+    width: 7rem;
+}
+
+.movieList_show{
+    background-color: pink;
+    height: 2rem;
+    text-align: center;
+}
+
+.movieList_hidden{
+    display: none;
+}
