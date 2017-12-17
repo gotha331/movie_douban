@@ -38,8 +38,8 @@ export default class Routers extends Component {
                            component={MovieContainer}>
                         <IndexRoute component={MovieListContainer}/>
                         <Route path="movieList/:movieType" component={MovieListContainer}/>
-                        <Route path="movieDetail" component={MovieDetailContainer}/>
-                        <Route path="movieSearch/:name" component={MovieSearchContainer}/>
+                        <Route path="movieDetail/:id" component={MovieDetailContainer}/>
+                        <Route path="movieSearch/:keyWord" component={MovieSearchContainer}/>
                         {/*/!*绝对路由*!/*/}
                         {/*<Route path="/movieList" component={MovieListContainer}/>*/}
                         {/*<Route path="/movieDetail" component={MovieDetailContainer}/>*/}

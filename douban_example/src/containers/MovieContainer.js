@@ -7,13 +7,47 @@ export default class MovieContainer extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            movieType: 'in_theaters'
+            movieType: 'in_theaters',
+            keyWord: ''
         }
     }
 
+    static contextTypes = {
+        router: React.PropTypes.object
+    }
+
+    //解决点击电影列表，左侧list不变色bug ??????
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.children.type.name == 'MovieListContainer') {
+         this.setState({
+             key:"",
+             // movieType:'in_theaters'
+         })
+        }
+    }
+
+
+
+    //改变电影类型
     changeMovieType = (movieType) => {
         this.setState({
             movieType: movieType
+        })
+    }
+
+    //改变关键词
+    changeKeyWord = (e) => {
+        this.setState({
+            keyWord: e.target.value
+        })
+    }
+
+    //搜索
+    searchMovie = () => {
+        this.context.router.push(`/movie/movieSearch/${this.state.keyWord}`)
+        this.setState({
+            movieType: '',
+            keyWord: ''
         })
     }
 
@@ -34,8 +68,8 @@ export default class MovieContainer extends Component {
                 <div className="movie_right">
                     <div className="movie_search">
                         <div>
-                            <input type="text"/>
-                            <button>搜索</button>
+                            <input type="text" value={this.state.keyWord} onChange={this.changeKeyWord}/>
+                            <button onClick={this.searchMovie}>搜索</button>
                         </div>
 
                     </div>

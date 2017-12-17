@@ -18,6 +18,8 @@ next();
 })
 
 // 3、定义了一堆中间件
+
+//定义getMovieListData接口
 app.get('/getMovieListData',function (req,res,next) {
     console.log('请求了getMovieListData方法')
 
@@ -26,6 +28,44 @@ app.get('/getMovieListData',function (req,res,next) {
 
     var url=`https://api.douban.com/v2/movie/${message.movieType}?start=${message.start}&count=${message.count}`
     // ?start=6&count=10
+    request(url,function (error,response,body) {
+        if (!error && response.statusCode == 200) {
+            res.send(JSON.parse(response.body))
+        }
+        else{
+            res.send({errMessage:error})
+        }
+    })
+})
+
+//定义getMovieDetailData接口
+app.get('/getMovieDetailData',function (req,res,next) {
+    console.log('请求了getMovieDetailData方法')
+
+    var id=req.query.message
+
+    var url=`https://api.douban.com/v2/movie/subject/${id}`
+    request(url,function (error,response,body) {
+        if (!error && response.statusCode == 200) {
+            res.send(JSON.parse(response.body))
+        }
+        else{
+            res.send({errMessage:error})
+        }
+    })
+})
+
+//电影查询方法
+//定义searchMovieList接口
+app.get('/searchMovieList',function (req,res,next){
+    console.log('请求了searchMovieList方法')
+
+    var message=JSON.parse(req.query.message)
+    console.log(message);
+
+    var keyWord = encodeURI(message.keyWord)
+
+    var url=`https://api.douban.com/v2/movie/search?q=${keyWord}&start=${message.start}&count=${message.count}`
     request(url,function (error,response,body) {
         if (!error && response.statusCode == 200) {
             res.send(JSON.parse(response.body))

@@ -3,9 +3,9 @@
 }
 
 .movieList_container .item {
-    background-color: #F8F8F8;
+    background-color: #F2F2F2;
     height: 12rem;
-    display:flex;
+    display: flex;
     /*text-align: center;*/
     align-items: center;
 
@@ -19,18 +19,12 @@
 
 }
 
-.movieList_container .item .item_right {
-
+.movieList_container .showBottom {
+    display: block;
+    height: auto;
+    text-align: center;
 }
 
-.movieList_container {
-
-}
-
-.movieList_container {
-
-}
-
-.movieList_container {
-
+.movieList_container .hideBottom {
+    display: none;
 }

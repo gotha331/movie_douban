@@ -31,12 +31,54 @@ export default {
     },
 
     //获取详细页面数据
-    getMovieDetailData() {
+    getMovieDetailData(id) {
+
+        console.log("获取了电影详细数据")
+        console.log(id)
+
+        // const strMessage = JSON.stringify(message)
+        const url = `${config.HTTP}${config.SERVER_PATH}:${config.PORT}/getMovieDetailData?message=${id}`
+
+
+        return new Promise(function (resolve, reject) {
+            fetch(url)
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        console.error('服务器繁忙，请稍后再试;\r\nCode:' + response.status)
+                    }
+                })
+                .then((data) => {
+                    resolve(data)
+                })
+                .catch((err) => {
+                    reject(err)
+                })
+        })
 
     },
 
     //搜索数据方法
-    searchMovieList() {
+    searchMovieList(message) {
+        const url = `${config.HTTP}${config.SERVER_PATH}:${config.PORT}/searchMovieList?message=${message}`
+
+        return new Promise(function (resolve, reject) {
+            fetch(url)
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        console.error('服务器繁忙，请稍后再试;\r\nCode:' + response.status)
+                    }
+                })
+                .then((data) => {
+                    resolve(data)
+                })
+                .catch((err) => {
+                    reject(err)
+                })
+        })
 
     }
 }
