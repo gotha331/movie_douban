@@ -1,0 +1,17 @@
+.call_container {
+    /*display:flex;*/
+
+    border: 1px solid #c0c0c0;
+    height: auto;
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0.5rem 1rem 0.5rem;
+
+}
+
+/*.call_container textarea {*/
+    /*width: 100%;*/
+    /*height: 12rem;*/
+    /*sresize: none;*/
+/*}*/

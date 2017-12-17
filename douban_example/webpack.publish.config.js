@@ -14,11 +14,14 @@ var CleanPlugin = require('clean-webpack-plugin');
 module.exports = {
     entry: {
         app: path.resolve(__dirname, 'src/js/app.js'),
-        vendors: ['react', 'react-dom']
+        vendors: ['react', 'react-dom', 'react-router']
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
+        //为了实现代码异步加载
+        publicPath:'/',
+        chunkFilename:'[name]_[chunkhash:8]_chunk.js'
     },
 
     module: {
@@ -27,10 +30,14 @@ module.exports = {
                 test: /\.jsx?$/, // 用正则来匹配文件路径，这段意思是匹配 js 或者 jsx
                 use: {
                     loader: 'babel-loader',
-                    query: {
-                        presets: ['es2015', 'react']
-                    }
+                    // query: {
+                    //     presets: ['es2015', 'react']
+                    // }
                 }
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
             },
 
             {
@@ -53,43 +60,43 @@ module.exports = {
             {
                 test: /\.(png|jpg|jpeg|gif)$/,
                 // 1kb=1024b 1b=8bit   25000bit~3kb
-                use:{
+                use: {
                     loader: 'url-loader?limit=25000&name=images/[name].[ext]'
                 }
             },
 
             {
                 test: /\.(eot|woff|ttf|woff2|svg)$/,
-               use:{
-                   loader: 'url-loader'
-               }
+                use: {
+                    loader: 'url-loader'
+                }
             },
         ]
     },
 
 
-    // resolve: {
-    // 自动扩展文件后缀名，意味着我们require模块可以省略不写后缀名
-    // 注意一下, extensions 第一个是空字符串! 对应不需要后缀的情况.
-    // extensions: ['', '.js', '.json', '.scss', '.jsx'],
-    // 模块别名定义，方便后续直接引用别名，无须多写长长的地址。后续直接 require('AppStore') 即可
-    // alias: {
-    //     ReactJS:"node_modules/react/react.min.js",
-    //    AppStore: 'js/stores/AppStores.js',
-    //    ActionType: 'js/actions/ActionType.js',
-    //    AppAction: 'js/actions/AppAction.js'
-    // }
-    // },
-    // 在这个属性里面定义的包是不会被打包进bundle。js文件中的,如果你要用这个属性，别忘了在index。html中引入cdn
-    // externals: {
-    //    // 配置了这个属性之后react和react-dom这些第三方的包都不会被构建进js中，那么我们就需要通过cdn进行文件的引用了
-    //    // 前边这个名称是在项目中引用用的，相当于import React from  ‘react1’中的react，
-    //    //'react1':"react",
-    //    'react1':"react",
-    //    'react-dom1':"react-dom",
-    //     '$1':"jQuery"
-    //
-    // },
+    resolve: {
+        // 自动扩展文件后缀名，意味着我们require模块可以省略不写后缀名
+        // 注意一下, extensions 第一个是空字符串! 对应不需要后缀的情况.
+        extensions: ['.js', '.json', '.scss', '.jsx'],
+        // 模块别名定义，方便后续直接引用别名，无须多写长长的地址。后续直接 require('AppStore') 即可
+        // alias: {
+        //     ReactJS:"node_modules/react/react.min.js",
+        //    AppStore: 'js/stores/AppStores.js',
+        //    ActionType: 'js/actions/ActionType.js',
+        //    AppAction: 'js/actions/AppAction.js'
+        // }
+        // },
+        // 在这个属性里面定义的包是不会被打包进bundle。js文件中的,如果你要用这个属性，别忘了在index。html中引入cdn
+        // externals: {
+        //    // 配置了这个属性之后react和react-dom这些第三方的包都不会被构建进js中，那么我们就需要通过cdn进行文件的引用了
+        //    // 前边这个名称是在项目中引用用的，相当于import React from  ‘react1’中的react，
+        //    //'react1':"react",
+        //    'react1':"react",
+        //    'react-dom1':"react-dom",
+        //     '$1':"jQuery"
+        //
+    },
     plugins: [
         // 构建之前先删除dist目录下面的文件夹
         new CleanPlugin(['dist']),

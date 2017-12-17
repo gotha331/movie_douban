@@ -4,6 +4,7 @@ import {Link} from 'react-router'
 
 import '../styles/root.css'
 import '../styles/app.css'
+// import 'antd/dist/antd.css'
 
 export default class AppContainer extends Component {
     constructor(props) {

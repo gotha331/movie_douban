@@ -2,11 +2,21 @@
 
 // 1、引入express
 const express = require('express')
+var bodyParser = require('body-parser')
 const path = require('path')
 const request=require('request')
 const port = process.env.PORT || 3004
 // 2、执行一个方法，本质就是new 了一个构造函数
 const app = express()
+
+//建立静态资源文件夹
+app.use(express.static(__dirname + '/public'))
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
+
 
 // 允许访问api的时候cors跨域
 app.use((req,res,next)=>{
@@ -75,6 +85,23 @@ app.get('/searchMovieList',function (req,res,next){
         }
     })
 })
+
+
+//接收反馈表单数据接口
+app.post('/sendFeedBack',function(req,res,next){
+    console.log('请求了sendFeedBack方法')
+
+    var message=JSON.parse(req.body.message)
+    console.log(message)
+    res.send({status:'OK'})
+})
+
+
+app.get('*', function (req, res){
+    res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+})
+
+
 
 // 4、启动服务器
 const server = app.listen(port, function () {
