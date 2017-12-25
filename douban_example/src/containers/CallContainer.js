@@ -1,6 +1,6 @@
 // 联系我们容器组件
 import React, {Component} from 'react'
-import {Form, Input, Select, Button,message as Message} from 'antd'
+import {Form, Input, Select, Button, message as Message} from 'antd'
 import '../styles/call.css'
 import service from '../services/callService.js'
 
@@ -11,7 +11,7 @@ const Option = Select.Option
 const formItemLayout = {
     labelCol: {
         xs: {span: 24},
-        sm: {span: 8},
+        sm: {span: 4},
     },
     wrapperCol: {
         xs: {span: 24},
@@ -25,8 +25,8 @@ const tailFormItemLayout = {
             offset: 0,
         },
         sm: {
-            span: 16,
-            offset: 8,
+            span: 12,
+            offset: 6,
         },
     },
 }
@@ -53,22 +53,23 @@ class CallContainer extends Component {
     }
 
     //将反馈数据提交到后台
-    sendFeedBack=(message)=>{
-const messageObj=JSON.stringify(message)
+    sendFeedBack = (message) => {
+        const messageObj = JSON.stringify(message)
         const _this = this
-        const promise=service.sendFeedBack(messageObj)
+        const promise = service.sendFeedBack(messageObj)
         promise.then(
-            function (data){
-                if(data.status=='OK'){
+            function (data) {
+                if (data.status == 'OK') {
                     _this.handleReset()
-                    Message.success('您的反馈提交成功！')
+                    // Message.success('您的反馈提交成功！',50)
+                    alert('您的反馈提交成功！')
                 }
             },
-            function(err){
-
+            function (err) {
+                alert(err + '提交失败，请您稍后重试！')
             }
-        ).catch(function (err){
-
+        ).catch(function (err) {
+            alert(err + '提交失败，请您稍后重试！')
         })
     }
 
@@ -83,6 +84,8 @@ const messageObj=JSON.stringify(message)
             </span>
         )
 
+        const {TextArea} = Input
+
         return (
             <div className="call_container">
                 <Form onSubmit={this.handleSubmit}>
@@ -96,21 +99,10 @@ const messageObj=JSON.stringify(message)
                                 required: true, message: '请输入反馈意见'
                             }],
                         })(
-                            <Input/>
+                            <TextArea rows={6}/>
                         )}
                     </FormItem>
-                    {/*{...formItemLayout}*/}
-                    {/*label="联系方式"*/}
-                    {/*hasFeedback*/}
-                    {/*>*/}
-                    {/*{getFieldDecorator('telephone', {*/}
-                    {/*rules: [{*/}
-                    {/*required: true, message: '请输入联系方式',*/}
-                    {/*}],*/}
-                    {/*})(*/}
-                    {/*<Input/>*/}
-                    {/*)}*/}
-                    {/*</FormItem>*/}
+
 
                     <FormItem
                         {...formItemLayout}
@@ -121,7 +113,6 @@ const messageObj=JSON.stringify(message)
                             rules: [{pattern: /^[1][3,4,5,7,8][0-9]{9}$/, required: true, message: '请输入您的电话号码!'}],
                         })(
                             <Input addonBefore={prefixSelector} style={{width: '100%'}}/>
-
                         )}
                     </FormItem>
 

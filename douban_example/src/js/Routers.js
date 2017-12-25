@@ -34,7 +34,17 @@ export default class Routers extends Component {
                             }
                         }
                     />
-                    <Route path="home" component={HomeContainer}/>
+                    {/*<Route path="home" component={HomeContainer}/>*/}
+                    <Route path="home"
+                           getComponent={
+                               (nextState, callback) => {
+                                   require.ensure([], (require) => {
+                                       callback(null, require("../containers/HomeContainer.js").default)
+                                   }, "home")
+                               }
+                           }
+                    />
+
                     <Route path="movie"
                         //可以进行权限效验、日志记录
                         // onEnter={()=>console.log("进入了movie路由")}

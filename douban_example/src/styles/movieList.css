@@ -2,21 +2,40 @@
     overflow-y: scroll;
 }
 
+.movieList_container .spin {
+    text-align: center;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 30px 50px;
+    margin: 15% auto;
+}
+
 .movieList_container .item {
     background-color: #F2F2F2;
     height: 12rem;
     display: flex;
-    /*text-align: center;*/
     align-items: center;
-
 }
 
 .movieList_container .item .item_left {
     height: 10rem;
-    /*text-align: center;*/
-    padding-left: 1rem;
-    padding-right: 0.5rem;
+    width: 10rem;
+    margin: 0 1rem;
+    border: 1px solid #A9A9A9;
+}
 
+.movieList_container .item .item_left img {
+    width: 100%;
+    height: 100%;
+}
+
+.movieList_container .item .item_right {
+    padding-top: 1rem;
+}
+
+.movieList_container .item .item_right span {
+    display: inline-block;
+    line-height: 1.5rem;
 }
 
 .movieList_container .showBottom {

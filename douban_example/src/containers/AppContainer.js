@@ -18,10 +18,6 @@ export default class AppContainer extends Component {
                     <Link to="/home">首页</Link>
                     <Link to="/movie">电影列表</Link>
                     <Link to="/call">联系我们</Link>
-
-                    {/*<Link to='/movie/movieList'>新列表</Link>*/}
-                    {/*<Link to='/movie/movieDetail'>详细</Link>*/}
-                    {/*<Link to='/movie/movieSearch/nn'>搜索</Link>*/}
                 </div>
                 <div className="app_content">
                     {this.props.children}

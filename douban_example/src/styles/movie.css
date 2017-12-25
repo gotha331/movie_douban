@@ -3,8 +3,9 @@
 }
 
 .movie_container .movie_left {
-    background-color: paleturquoise;
+    background-color: #F2F2F2;
     width: 25%;
+    border-right: 1px solid #bbb;
 }
 
 .movie_container .movie_left a {
@@ -25,7 +26,7 @@
 }
 
 .movie_container .movie_right {
-    background-color: #60b044;
+    /*background-color: #60b044;*/
     width: 75%;
     display: flex;
     flex-direction: column;
@@ -34,14 +35,14 @@
 
 .movie_container .movie_search {
     height: 8%;
-    background-color: #c0b536;
+    background-color: #F2F2F2;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-bottom: 1px dashed #bbb;
 }
 
 .movie_container .movie_search div {
-    /*height: 100%;*/
     display: flex;
     justify-content: center;
     align-items: center;

@@ -96,7 +96,7 @@ app.post('/sendFeedBack',function(req,res,next){
     res.send({status:'OK'})
 })
 
-
+//实现跨标签访问
 app.get('*', function (req, res){
     res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
 })

@@ -1,10 +1,10 @@
-.app_container {
-    background-color: #00B83F;
+#app {
+    height: 100%;
 }
 
 .app_header {
     height: 8%;
-    background-color: orange;
+    background-color: #666;
     display: flex;
     /*主轴方向上对其*/
     justify-content: center;
@@ -38,3 +38,4 @@
     justify-content: center;
     align-items: center;
 }
+

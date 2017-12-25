@@ -5,6 +5,7 @@
 import React, {Component} from 'react'
 import '../styles/movieDetail.css'
 import service from '../services/movieService.js'
+import {Spin} from 'antd'
 
 export default class MovieDetailContainer extends Component {
     constructor(props) {
@@ -19,16 +20,13 @@ export default class MovieDetailContainer extends Component {
         }
     }
 
-
     componentDidMount() {
         this.fetch(this.props.params.id)
     }
 
     //请求数据的方法
     fetch = (id) => {
-
         const _this = this
-
         const promise = service.getMovieDetailData(id)
         promise.then(
             function (data) {
@@ -43,15 +41,16 @@ export default class MovieDetailContainer extends Component {
                 console.log(err)
             }
         ).catch(function (err) {
-
+            console.log(err)
         })
     }
 
     //渲染遮罩方法
     showLoading = () => {
         return (
-            <div>
-                正在加载数据00000...
+            <div className="spin">
+                <Spin size="large" tip="Loading...">
+                </Spin>
             </div>
         )
     }

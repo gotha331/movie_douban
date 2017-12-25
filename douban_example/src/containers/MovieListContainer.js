@@ -5,8 +5,10 @@
 import React, {Component} from 'react'
 import '../styles/movieList.css'
 import service from '../services/movieService.js'
+import {Spin} from 'antd'
 
 export default class MovieListContainer extends Component {
+
     constructor(props) {
         super(props)
         //note：改变state才会触发页面的重新渲染
@@ -23,9 +25,10 @@ export default class MovieListContainer extends Component {
                 pageIndex: 1,
                 start: 0,
                 count: 10
-            },
+            }
         }
     }
+
 
     //获取从react-router中传递过来的router属性
     static contextTypes = {
@@ -48,7 +51,7 @@ export default class MovieListContainer extends Component {
                 //判断是否滚动到底部
                 isButtom: false,
                 //要渲染的电影列表数据
-                movieListData: [],
+                movieListData: [''],
                 //只要传递到后台里面的参数，都定义在message属性中
                 message: {
                     movieType: 'in_theaters',
@@ -69,20 +72,13 @@ export default class MovieListContainer extends Component {
             //调用了添加滚动监听事件的方法
             this.addScrollEvent()
         }
-
-
     }
 
     addScrollEvent = () => {
         const _this = this
         this.refs.scrollContainer.onscroll = function (e) {
-            // console.log(e)
-
-            //scrollHeight:滚动大小，指的是包含滚动内容的元素大小（元素内容的总高度）
-            //scrollTop:返回元素的垂直滚动条位置
-            //offsetHeight:偏移量，包含元素在屏幕上所用的所有可见空间（包括所有的内边距滚动条和边框大小，不包括外边距
             if (e.target.scrollHeight - 2 <= e.target.scrollTop + e.target.offsetHeight) {
-                console.log('到底了')
+                // console.log('到底了')
                 //如果isButtom为true,直接返回，防止“到底后”多次触发，请求数据
                 if (_this.state.isButtom) {
                     return
@@ -140,10 +136,6 @@ export default class MovieListContainer extends Component {
         //修改分页信息
         messageObj.movieType = movieType
 
-        // 0  9   1
-        // 10 19  2
-        // 20 29  3
-        // 30 39  4
         messageObj.start = (messageObj.pageIndex - 1) * messageObj.count
         messageObj.pageIndex++
 
@@ -157,15 +149,11 @@ export default class MovieListContainer extends Component {
         promise.then(
             function (data) {
                 console.log(data)
-
                 if (movieListData.length > 0) {
-
                     movieListData = movieListData.concat(data.subjects)
-
                 } else {
                     movieListData = data.subjects
                 }
-
                 console.log(movieListData)
                 //只有state状态改变时，页面才会重新渲染
                 _this.setState({
@@ -176,10 +164,10 @@ export default class MovieListContainer extends Component {
                 })
             },
             function (err) {
-
+                console.log(err)
             }
         ).catch(function (err) {
-
+            console.log(err)
         })
     }
 
@@ -187,7 +175,11 @@ export default class MovieListContainer extends Component {
     showLoading = () => {
         return (
             <div className='movieList_container'>
-                正在加载数据00000...
+                <div className="spin">
+                    {/*遮罩*/}
+                    <Spin size="large" tip="Loading...">
+                    </Spin>
+                </div>
             </div>
         )
     }
@@ -201,10 +193,18 @@ export default class MovieListContainer extends Component {
     renderItem = (item) => {
         return (
             <div className="item" key={item.id} onClick={() => this.goDetail(item.id)}>
-                <img className="item_left" src={item.images.small} alt=""/>
+                <div className="item_left">
+                    <img src={item.images.small} alt=""/>
+                </div>
+
                 <div className="item_right">
                     <h3>{item.title}</h3>
-                    <span>{item.year}</span>
+                    <span>{item.year}</span><br/>
+                    <span>{item.genres}</span><br/>
+                    <span>豆瓣评分：{item.rating.average}</span><br/>
+                    <span>导演：{item.directors[0].name}</span><br/>
+                    {/*<span>主演：{item.casts[0].name}</span>&nbsp;&nbsp;*/}
+                    {/*<span>{item.casts[1].name}</span>&nbsp;&nbsp;*/}
                 </div>
             </div>
         )
@@ -218,7 +218,8 @@ export default class MovieListContainer extends Component {
                 {this.state.movieListData.map(this.renderItem)}
 
                 <div className={this.state.isButtom ? 'showBottom ' : 'hideBottom '}>
-                    正在请求数据......
+                    {/*遮罩*/}
+                    <Spin/>
                 </div>
             </div>
         )

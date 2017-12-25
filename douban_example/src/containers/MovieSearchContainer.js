@@ -3,8 +3,9 @@
 *
 * */
 import React, {Component} from 'react'
-// import '../styles/movieSearch.css'
+import '../styles/movieList.css'
 import service from '../services/movieService.js'
+import {Spin} from 'antd'
 
 export default class MovieSearchContainer extends Component {
     constructor(props) {
@@ -44,26 +45,19 @@ export default class MovieSearchContainer extends Component {
 
     componentDidUpdate() {
 
-        if(this.state.isShowLoading){
+        if (this.state.isShowLoading) {
             this.fetch(this.state.message.keyWord)
-        }else{
+        } else {
             //调用了添加滚动监听事件的方法
             this.addScrollEvent()
         }
-
-
     }
 
     addScrollEvent = () => {
         const _this = this
         this.refs.scrollContainer.onscroll = function (e) {
-            // console.log(e)
-
-            //scrollHeight:滚动大小，指的是包含滚动内容的元素大小（元素内容的总高度）
-            //scrollTop:返回元素的垂直滚动条位置
-            //offsetHeight:偏移量，包含元素在屏幕上所用的所有可见空间（包括所有的内边距滚动条和边框大小，不包括外边距
             if (e.target.scrollHeight - 2 <= e.target.scrollTop + e.target.offsetHeight) {
-                console.log('到底了')
+                // console.log('到底了')
                 //如果isButtom为true,直接返回，防止“到底后”多次触发fetch请求
                 if (_this.state.isButtom) {
                     return
@@ -76,14 +70,12 @@ export default class MovieSearchContainer extends Component {
             }
         }
     }
-
     //请求数据的方法
     fetch = (keyWord) => {
 
         //一.判断条件
         //判断是否切换了搜索内容，如果切换了搜索内容，才显示遮罩，并且清空movieListData
         if (keyWord != this.state.message.keyWord) {
-            //note:在这里设置了setState方法，没有立即生效，在componentDidUpdate方法里面才会生效
             this.setState({
                 //控制是否要显示遮罩层
                 isShowLoading: true,
@@ -122,18 +114,15 @@ export default class MovieSearchContainer extends Component {
         const promise = service.searchMovieList(message)
         promise.then(
             function (data) {
-                console.log(data)
-                console.log('搜索页面数据')
+                // console.log(data)
 
                 if (movieListData.length > 0) {
-
                     movieListData = movieListData.concat(data.subjects)
-
                 } else {
                     movieListData = data.subjects
                 }
 
-                console.log(movieListData)
+                // console.log(movieListData)
                 //只有state状态改变时，页面才会重新渲染
                 _this.setState({
                     isShowLoading: false,
@@ -143,10 +132,10 @@ export default class MovieSearchContainer extends Component {
                 })
             },
             function (err) {
-
+                console.log(err)
             }
         ).catch(function (err) {
-
+            console.log(err)
         })
     }
 
@@ -154,7 +143,11 @@ export default class MovieSearchContainer extends Component {
     showLoading = () => {
         return (
             <div className='movieList_container'>
-                正在加载数据...
+                <div className="spin">
+                    {/*遮罩*/}
+                    <Spin size="large" tip="Loading...">
+                    </Spin>
+                </div>
             </div>
         )
     }
@@ -168,10 +161,17 @@ export default class MovieSearchContainer extends Component {
     renderItem = (item) => {
         return (
             <div className="item" key={item.id} onClick={() => this.goDetail(item.id)}>
-                <img className="item_left" src={item.images.small} alt=""/>
+                <div className="item_left">
+                    <img src={item.images.small} alt=""/>
+                </div>
                 <div className="item_right">
                     <h3>{item.title}</h3>
-                    <span>{item.year}</span>
+                    <span>{item.year}</span><br/>
+                    <span>{item.genres}</span><br/>
+                    <span>豆瓣评分：{item.rating.average}</span><br/>
+                    <span>导演：{item.directors[0].name}</span><br/>
+                    {/*<span>主演：{item.casts[0].name}</span>&nbsp;&nbsp;*/}
+                    {/*<span>{item.casts[1].name}</span>&nbsp;&nbsp;*/}
                 </div>
             </div>
         )
@@ -185,7 +185,7 @@ export default class MovieSearchContainer extends Component {
                 {this.state.movieListData.map(this.renderItem)}
 
                 <div className={this.state.isButtom ? 'showBottom ' : 'hideBottom '}>
-                    正在请求数据......
+                    <Spin/>
                 </div>
             </div>
         )
